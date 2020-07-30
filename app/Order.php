@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
+    use \Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
     protected $fillable = [
         'id',
         'name',
@@ -22,7 +24,17 @@ class Order extends Model
      *
      * @var array
      */
+    // protected $casts = [
+    //     'products' => 'array',
+    // ];
+
     protected $casts = [
-        'products' => 'array',
+        'products' => 'json',
     ];
+
+    public function products(){
+        return $this->belongsToMany('App\Product');
+
+    }
+
 }

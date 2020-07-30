@@ -29,7 +29,7 @@ class Product extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -61,9 +61,12 @@ class Product extends Resource
                   Text::make('Cost')
                     ->rules('required', 'numeric')
                     ->autofill(),
+                  Text::make('Count')
+                    ->rules('required', 'numeric')
+                    ->autofill(),
                   BelongsTo::make('Brand')->nullable(),
                   BelongsTo::make('Vendor','vendor', 'App\Nova\User')->nullable(),
-                  BelongsToMany::make('Categories'),     
+                  BelongsTo::make('Categories'),     
                   Images::make('Gallary')
                       ->conversionOnIndexView('thumb')
                       ->hideFromIndex()

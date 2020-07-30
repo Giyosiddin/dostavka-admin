@@ -36,6 +36,7 @@
         "laravel/nova": "*",
         "laravel/tinker": "^1.0",
         "shaxzodbek/product-property": "*",
+        "staudenmeir/eloquent-json-relations": "^1.1",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
