@@ -38,9 +38,14 @@ class Category extends Model
   {
       return 'parent_id';
   }
+  //   public function products()
+  //   {
+  //     return $this->belongsToMany('App\Product');
+  //   }
+  
   public function products()
   {
-    return $this->belongsToMany('App\Product');
+    return $this->hasMany('App\Product');
   }
   public function properties()
   {

@@ -47,9 +47,10 @@ class ProductController extends ApiController
         $products = Product::query()->limit(request()->get('limit', 10));
         if (is_array(request()->get('categories'))){
             $categories = request()->get('categories');
-            $products->whereHas('categories', function($query) use ($categories){
-                $query->whereIn('categories.id', $categories);
-            });
+            // $products->whereHas('categories', function($query) use ($categories){
+            //     $query->whereIn('categories.id', $categories);
+            // });
+            $products->whereIn('category_id', $categories);
         }
         if(is_array(request()->get('vendor_id'))){
             $vendor_id = request()->get('vendor_id');
