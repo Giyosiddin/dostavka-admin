@@ -64,19 +64,18 @@ class Product extends Resource
                   Text::make('Count')
                     ->rules('required', 'numeric')
                     ->autofill(),
-                  BelongsTo::make('Brand')->nullable(),
-                  BelongsTo::make('Vendor','vendor', 'App\Nova\User')->nullable(),
-                  BelongsTo::make('Categories'),     
+                //   BelongsTo::make('Brand')->nullable(),
+                //   BelongsTo::make('Vendor','vendor', 'App\Nova\User'),
+                  BelongsTo::make('Category'),     
                   Images::make('Gallary')
                       ->conversionOnIndexView('thumb')
-                      ->hideFromIndex()
                       ->autofill(),
-                  KeyValue::make('Features', 'meta')->hideFromIndex()
-                  ->autofill(), 
-                ],
-                'Properties' => [
-                  HasMany::make('Products'),
-                  ProductProperty::make('Properties')->onlyOnDetail(),
+                //   KeyValue::make('Features', 'meta')->hideFromIndex()
+                //   ->autofill(), 
+                // ],
+                // 'Properties' => [
+                //   HasMany::make('Products'),
+                //   ProductProperty::make('Properties')->onlyOnDetail(),
                 ],
           ]),
         ];
