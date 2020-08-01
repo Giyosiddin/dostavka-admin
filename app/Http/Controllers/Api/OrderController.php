@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Order;
 use App\User;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Transformer\OrderTransformer;
 use App\Http\Controllers\Controller;
@@ -89,8 +90,8 @@ class OrderController extends ApiController
         ]);
         foreach ($products as $key => $value) {
             $qauntity = $value['quantity'];
-            $cost = $value['cost'];
-            $total = $value['cost'] * $value['quantity'];
+            $cost = Product::where('id', $value['id'])->pluck('cost');
+            $total = $cost * $value['quantity'];
             $order->products()->attach($order->id, ['qauntity' => $qauntity, 'cost' => $cost, 'total' => $total ]);
         }
 
