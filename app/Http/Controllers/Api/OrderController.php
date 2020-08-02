@@ -89,10 +89,13 @@ class OrderController extends ApiController
             'phone' => $request->phone,
         ]);
         foreach ($products as $key => $value) {
-            $qauntity = $value['quantity'];
-            $cost = Product::where('id', $value['id'])->pluck('cost');
-            $total = $cost * $value['quantity'];
-            $order->products()->attach($order->id, ['qauntity' => $qauntity, 'cost' => $cost, 'total' => $total ]);
+            $product = Product::find($value['id']);
+            if ($product){
+                $qauntity = $value['quantity'];
+                $cost = $product->cost;
+                $total = $cost * $value['quantity'];
+                $order->products()->attach($order->id, ['qauntity' => $qauntity, 'cost' => $cost, 'total' => $total ]);
+            }
         }
 
         return $this->response->get(['order' => [$order, new OrderTransformer]]);
