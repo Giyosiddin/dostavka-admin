@@ -19,6 +19,7 @@ class ProductTransformer extends TransformerAbstract
             'cost' => intval($product->cost),
             'vendor_id' => $product->vendor_id,
             'meta' => json_decode($product->meta, true),
+            'order_data' => $product->pivot
         ];
     }
     public function includeCoverImage(Product $product)

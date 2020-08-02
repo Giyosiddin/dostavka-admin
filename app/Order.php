@@ -14,7 +14,6 @@ class Order extends Model
         'phone',
         'status',
         'country_id',
-        'products',
         'delivery_info',
         'overal',
         'meta',
@@ -24,17 +23,10 @@ class Order extends Model
      *
      * @var array
      */
-    // protected $casts = [
-    //     'products' => 'array',
-    // ];
 
-    protected $casts = [
-        'products' => 'json',
-    ];
 
     public function products(){
-        return $this->belongsToMany('App\Product');
-
+        return $this->belongsToMany('App\Product')->withPivot(['total', 'cost', 'quantity']);
     }
 
 }
