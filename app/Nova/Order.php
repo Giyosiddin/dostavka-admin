@@ -2,20 +2,23 @@
 
 namespace App\Nova;
 
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Textarea;
 use Hnassr\NovaKeyValue\KeyValue;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsToMany;
+use App\Nova\Actions\GenerateListFile;
+use App\Nova\Actions\GenerateOrderFile;
+use App\Nova\Actions\GenerateOrdersFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Eminiarts\Tabs\Tabs;
 use Shaxzodbek\ProductProperty\ProductProperty;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Status;
 
 class Order extends Resource
 {
@@ -110,6 +113,10 @@ class Order extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new GenerateListFile,
+            new GenerateOrdersFile,
+            new GenerateOrderFile
+        ];
     }
 }
