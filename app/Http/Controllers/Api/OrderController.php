@@ -85,15 +85,22 @@ class OrderController extends ApiController
         $products = $request->products;
         $order = Order::create([
             'name' => $request->name,
-            'products' => $products,
             'phone' => $request->phone,
         ]);
+        $overal = 0;
         foreach ($products as $key => $value) {
-            $qauntity = $value['quantity'];
-            $cost = Product::where('id', $value['id'])->pluck('cost');
-            $total = $cost * $value['quantity'];
-            $order->products()->attach($order->id, ['qauntity' => $qauntity, 'cost' => $cost, 'total' => $total ]);
+            $product = Product::find($value['id']);
+            if ($product){
+                $quantity = $value['quantity'];
+                $cost = $product->cost;
+                $total = $cost * $value['quantity'];
+                $overal += $total;
+                $order->products()->attach($product->id, ['quantity' => $quantity, 'cost' => $cost, 'total' => $total ]);
+            }
         }
+        $order->update([
+            'overal' => $overal
+        ]);
 
         return $this->response->get(['order' => [$order, new OrderTransformer]]);
     }

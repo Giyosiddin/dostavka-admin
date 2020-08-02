@@ -51,4 +51,7 @@ class Product extends Model implements HasMedia
     public function vendor(){
         return $this->belongsTo('App\User');
     }
+    public function orders(){
+        return $this->belongsToMany('App\Product')->withPivot(['total', 'cost', 'quantity']);
+    }
 }

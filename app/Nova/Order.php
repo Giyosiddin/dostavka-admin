@@ -52,15 +52,16 @@ class Order extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('phone')->rules('required', 'numeric'),
-            Text::make('name')->rules('required'),
-            BelongsToMany::make('Products'),
+            Text::make('Phone')->rules('required', 'numeric'),
+            Text::make('Name')->rules('required'),
+            BelongsToMany::make('Products')
+                ->fields(new OrderProductFields),
             Select::make('Status')->options([
                 '0' => 'New',
                 '1' => 'Processing',
                 '2' => 'Complete',
                 '3' => 'Cancelled',
-            ])->withMeta(['value' => '0'])
+            ])
             ->displayUsingLabels(),   
             Text::make('overal')
 

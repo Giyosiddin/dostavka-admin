@@ -15,15 +15,14 @@ class OrderTransformer extends TransformerAbstract
             'phone' => $order->phone,
             'status' => $order->status,
             'country_id' => $order->country_id,
-            'cart_products' => $order->products,
             'delivery_info' => $order->delivery_info,
             'overal' => $order->overal,
             'meta' => $order->meta,
         ];
     }
     public function includeProducts(Order $order){
-        $products = \App\Product::whereIn('id', array_column($order->products, 'id'))->get();
-        return $this->collection($products, new ProductTransformer);
+        
+        return $this->collection($order->products, new ProductTransformer);
 
     }
 }

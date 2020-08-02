@@ -53,24 +53,32 @@ class Product extends Resource
             new Tabs('Tabs', [
               'Main'    => [
                   ID::make()->sortable(),
+                  Images::make('Gallary')
+                      ->conversionOnIndexView('thumb')
+                      ->autofill(),
                   Text::make('Title')
                     ->sortable()
                     ->rules('required', 'max:255')
                     ->autofill(),
-                Textarea::make('description'),
+                  Textarea::make('description'),
                   Text::make('Cost')
                     ->rules('required', 'numeric')
-                    ->autofill(),
+                    ->autofill()
+                    ->hideFromIndex(function (ResourceIndexRequest $request) {
+                        return $request->viaRelationship();
+                    }),
                   Text::make('Count')
                     ->rules('required', 'numeric')
                     ->autofill(),
-                     Text::make('Order')
+                    Text::make('Order')
                     ->rules('required', 'numeric')
-                    ->hideWhenCreating(),
-                  BelongsTo::make('Category'),     
-                  Images::make('Gallary')
-                      ->conversionOnIndexView('thumb')
-                      ->autofill(),
+                    ->hideWhenCreating()
+                    ->hideFromIndex(function (ResourceIndexRequest $request) {
+                        return $request->viaRelationship();
+                    }),
+                    BelongsTo::make('Category'),     
+                    BelongsToMany::make('orders')
+                        ->fields(new OrderProductFields),
                 ],
           ]),
         ];
