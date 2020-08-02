@@ -91,10 +91,10 @@ class OrderController extends ApiController
         foreach ($products as $key => $value) {
             $product = Product::find($value['id']);
             if ($product){
-                $qauntity = $value['quantity'];
+                $quantity = $value['quantity'];
                 $cost = $product->cost;
                 $total = $cost * $value['quantity'];
-                $order->products()->attach($order->id, ['qauntity' => $qauntity, 'cost' => $cost, 'total' => $total ]);
+                $order->products()->attach($order->id, ['quantity' => $quantity, 'cost' => $cost, 'total' => $total ]);
             }
         }
 
