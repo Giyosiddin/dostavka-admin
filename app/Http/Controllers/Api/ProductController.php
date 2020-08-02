@@ -165,4 +165,24 @@ class ProductController extends ApiController
         $products = $products->get();
         return $this->response->get(['products' => [$products, new ProductTransformer]]);
     }
+
+    public function share()
+    {
+        //в переменную $token нужно вставить токен, который нам прислал @botFather
+        $token = "1251885183:AAHCq_olSygRxS1wt-mlxqO4qBm9zJ62npA";
+         
+        //нужна вставить chat_id (Как получить chad id, читайте ниже)
+        $chat_id = "-376477522";
+         $arr = array(
+              'Дата : ' => $date
+            );
+              
+        //При помощи цикла перебираем массив и помещаем переменную $txt текст из массива $arr
+        foreach($arr as $key => $value) {
+          $txt .= "<b>".$key."</b> ".$value."%0A";
+        };
+        //Осуществляется отправка данных в переменной $sendToTelegram
+        $sendToTelegram = fopen("https://api.telegram.org/bot{$token}/sendMessage?chat_id={$chat_id}&parse_mode=html&text={$txt}","r");
+ 
+    }
 }
