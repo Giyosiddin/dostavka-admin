@@ -48,5 +48,6 @@ Route::group([
       Route::get('home', 'Api\PageController@home');
     });
     Route::post('filter', 'Api\ProductController@filter');
+    Route::post('order-products', 'Api\OrderController@orderProducts');
 
 });

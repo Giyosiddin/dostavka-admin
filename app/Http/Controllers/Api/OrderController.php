@@ -215,4 +215,17 @@ class OrderController extends ApiController
             ]
         ]);
     }
+    public function orderProducts()
+    {
+
+        $orders = Order::query();
+        $ids = request()->get('ids');
+        $orders->whereHas('products', function($query) use ($ids){
+                $query->whereIn('orders.id', $ids);
+        });
+
+         dd($orders->get());
+
+
+    }
 }
