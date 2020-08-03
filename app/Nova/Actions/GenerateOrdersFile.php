@@ -51,8 +51,8 @@ class GenerateOrdersFile extends Action
         $templateProcessor->setValue('overal', $overal);
 
         $file = "{$date}-list.docx";
-        $url = "\docs\orders\\". $file;
-        $file_path = "app\public" . $url;
+        $url = "/docs/orders/". $file;
+        $file_path = "app/public" . $url;
         
         $templateProcessor->saveAs(storage_path($file_path));
         return Action::download(url('storage/'.$url), $file);

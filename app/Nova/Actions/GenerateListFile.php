@@ -68,8 +68,8 @@ class GenerateListFile extends Action
         }
         $templateProcessor->setValue('overal', $overal);
         $file = "{$date}-list.docx";
-        $url = "\docs\products\\". $file;
-        $file_path = "app\public" . $url;
+        $url = "/docs/products/". $file;
+        $file_path = "app/public" . $url;
         
         $templateProcessor->saveAs(storage_path($file_path));
         return Action::download(url('storage/'.$url), $file);
