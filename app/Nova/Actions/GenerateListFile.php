@@ -67,9 +67,9 @@ class GenerateListFile extends Action
             $i++;
         }
         $templateProcessor->setValue('overal', $overal);
-        $templateProcessor->setValue('total_discount#' . $i,0);
+        $templateProcessor->setValue('total_discount', 0);
 
-        $templateProcessor->setValue('tax#' . $i, 0);
+        $templateProcessor->setValue('tax', 0);
 
         $file = "{$date}-list.docx";
         $url = "/docs/products/". $file;
