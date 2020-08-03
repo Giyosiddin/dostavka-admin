@@ -57,16 +57,32 @@ class Order extends Resource
             ID::make()->sortable(),
             Text::make('Phone')->rules('required', 'numeric'),
             Text::make('Name')->rules('required'),
+            Text::make('Address'),
+            Select::make('Status')
+                ->options([
+                    '0' => 'New',
+                    '1' => 'Processing',
+                    '2' => 'Complete',
+                    '3' => 'Cancelled',
+                ])
+                ->displayUsingLabels(),   
+            Select::make('Payment type')
+                ->options([
+                    'cash' => 'Naqt pul',
+                    'click' => 'Click',
+                    'payme' => 'Payme'
+                ])
+                ->displayUsingLabels(),   
+            Select::make('Payment status')
+                ->options([
+                    'waiting' => 'Kutilmoqda',
+                    'processing' => 'Amalga oshirilmoqda',
+                    'completed' => 'Yakunlandi'
+                ])
+                ->displayUsingLabels(),   
+            Text::make('overal'),
             BelongsToMany::make('Products')
                 ->fields(new OrderProductFields),
-            Select::make('Status')->options([
-                '0' => 'New',
-                '1' => 'Processing',
-                '2' => 'Complete',
-                '3' => 'Cancelled',
-            ])
-            ->displayUsingLabels(),   
-            Text::make('overal')
 
 
         ];
