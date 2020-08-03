@@ -43,7 +43,7 @@ class GenerateListFile extends Action
                         'quantity' => $product->pivot->quantity,
                         'total' => $product->pivot->total,
                         'orders' => '#' . $order->id,
-                        'cost' => $product->pivot->total,
+                        'cost' => $product->pivot->cost,
                         'discount' => 0
                     ];
                 }
@@ -67,6 +67,10 @@ class GenerateListFile extends Action
             $i++;
         }
         $templateProcessor->setValue('overal', $overal);
+        $templateProcessor->setValue('total_discount#' . $i,0);
+
+        $templateProcessor->setValue('tax#' . $i, 0);
+
         $file = "{$date}-list.docx";
         $url = "/docs/products/". $file;
         $file_path = "app/public" . $url;

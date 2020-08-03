@@ -50,7 +50,7 @@ class GenerateOrdersFile extends Action
         }
         $templateProcessor->setValue('overal', $overal);
 
-        $file = "{$date}-list.docx";
+        $file = "{$date}-orders.docx";
         $url = "/docs/orders/". $file;
         $file_path = "app/public" . $url;
         
