@@ -27,7 +27,7 @@ class GenerateListFile extends Action
     {
         $ids = $models->pluck('id');
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/documents/list.docx'));
-        $orders = \App\Order::whereIn('id', $ids)->with('products')->get();
+        $orders = \App\Order::whereIn('id', $ids)->whereIn('status', ['0','1'])->with('products')->get();
         $date = date('Y-m-d-H-i-s');
         $products = [];
         foreach ($orders as $order){
@@ -49,7 +49,7 @@ class GenerateListFile extends Action
                 }
             }
         }
-        $templateProcessor->setValue('date', $order->created_at);
+        $templateProcessor->setValue('date', $date);
 
         $count = count($products);
         $templateProcessor->cloneRow('product_id', $count);
@@ -63,6 +63,7 @@ class GenerateListFile extends Action
             $templateProcessor->setValue('cost#' . $i, $item['cost']);
             $templateProcessor->setValue('discount#' . $i, $item['discount']);
             $templateProcessor->setValue('total#' . $i, $item['total']);
+            $templateProcessor->setValue('vendor_market#' . $i, $item['product']->vendor_market);
             $overal += $item['total'];
             $i++;
         }
