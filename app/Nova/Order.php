@@ -60,10 +60,10 @@ class Order extends Resource
             Text::make('Address'),
             Select::make('Status')
                 ->options([
-                    '0' => 'New',
-                    '1' => 'Processing',
-                    '2' => 'Complete',
-                    '3' => 'Cancelled',
+                    '0' => 'Yangi',
+                    '1' => 'Amalga oshirilmoqda',
+                    '2' => 'Yakunladi',
+                    '3' => 'Bekor qilindi',
                 ])
                 ->displayUsingLabels(),   
             Select::make('Payment type')

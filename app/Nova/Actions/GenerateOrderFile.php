@@ -24,15 +24,24 @@ class GenerateOrderFile extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $order = $models[0];
-
+        $payment_types = [
+            'cash' => 'Naqt pul',
+            'click' => 'Click',
+            'payme' => 'Payme'
+        ];
+        $payment_statuses = [
+            'waiting' => 'Kutilmoqda',
+            'processing' => 'Amalga oshirilmoqda',
+            'completed' => 'Yakunlandi'
+        ];
         $date = date('Y-m-d-H-i-s');
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/documents/shartnoma.docx'));
         $templateProcessor->setValue('user_name', $order->name);
         $templateProcessor->setValue('address', $order->address);
         $templateProcessor->setValue('phone', $order->phone);
         $templateProcessor->setValue('date', $order->created_at);
-        $templateProcessor->setValue('payment_type', $order->payment_type);
-        $templateProcessor->setValue('payment_status', $order->payment_status);
+        $templateProcessor->setValue('payment_type', $payment_types[$order->payment_type]);
+        $templateProcessor->setValue('payment_status', $payment_statuses[$order->payment_status]);
         $templateProcessor->setValue('order_id', $order->id);
         $products = $order->products;
         $count = count($products);
@@ -49,8 +58,8 @@ class GenerateOrderFile extends Action
         $templateProcessor->setValue('overal', $overal);
 
         $file = "{$order->id}-{$date}-order.docx";
-        $url = "\docs\order\\". $file;
-        $file_path = "app\public" . $url;
+        $url = "/docs/order/". $file;
+        $file_path = "app/public" . $url;
         
         $templateProcessor->saveAs(storage_path($file_path));
         return Action::download(url('storage/'.$url), $file);

@@ -60,7 +60,7 @@ class Product extends Resource
                     ->sortable()
                     ->rules('required', 'max:255')
                     ->autofill(),
-                  Textarea::make('description'),
+                  Textarea::make('Description'),
                   Text::make('Cost')
                     ->rules('required', 'numeric')
                     ->autofill()
@@ -77,6 +77,8 @@ class Product extends Resource
                         return $request->viaRelationship();
                     }),
                     BelongsTo::make('Category'),     
+                    Text::make('Vendor market')
+                        ->hideWhenCreating(),     
                     BelongsToMany::make('orders')
                         ->fields(new OrderProductFields),
                 ],

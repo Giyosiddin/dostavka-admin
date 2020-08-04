@@ -27,7 +27,7 @@ class GenerateListFile extends Action
     {
         $ids = $models->pluck('id');
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/documents/list.docx'));
-        $orders = \App\Order::whereIn('id', $ids)->with('products')->get();
+        $orders = \App\Order::whereIn('id', $ids)->whereIn('status', ['0','1'])->with('products')->get();
         $date = date('Y-m-d-H-i-s');
         $products = [];
         foreach ($orders as $order){
@@ -43,13 +43,13 @@ class GenerateListFile extends Action
                         'quantity' => $product->pivot->quantity,
                         'total' => $product->pivot->total,
                         'orders' => '#' . $order->id,
-                        'cost' => $product->pivot->total,
+                        'cost' => $product->pivot->cost,
                         'discount' => 0
                     ];
                 }
             }
         }
-        $templateProcessor->setValue('date', $order->created_at);
+        $templateProcessor->setValue('date', $date);
 
         $count = count($products);
         $templateProcessor->cloneRow('product_id', $count);
@@ -63,13 +63,18 @@ class GenerateListFile extends Action
             $templateProcessor->setValue('cost#' . $i, $item['cost']);
             $templateProcessor->setValue('discount#' . $i, $item['discount']);
             $templateProcessor->setValue('total#' . $i, $item['total']);
+            $templateProcessor->setValue('vendor_market#' . $i, $item['product']->vendor_market);
             $overal += $item['total'];
             $i++;
         }
         $templateProcessor->setValue('overal', $overal);
+        $templateProcessor->setValue('total_discount', 0);
+
+        $templateProcessor->setValue('tax', 0);
+
         $file = "{$date}-list.docx";
-        $url = "\docs\products\\". $file;
-        $file_path = "app\public" . $url;
+        $url = "/docs/products/". $file;
+        $file_path = "app/public" . $url;
         
         $templateProcessor->saveAs(storage_path($file_path));
         return Action::download(url('storage/'.$url), $file);

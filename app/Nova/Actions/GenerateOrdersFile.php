@@ -25,7 +25,16 @@ class GenerateOrdersFile extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $orders = $models;
-
+        $payment_types = [
+            'cash' => 'Naqt pul',
+            'click' => 'Click',
+            'payme' => 'Payme'
+        ];
+        $payment_statuses = [
+            'waiting' => 'Kutilmoqda',
+            'processing' => 'Amalga oshirilmoqda',
+            'completed' => 'Yakunlandi'
+        ];
         $date = date('Y-m-d-H-i-s');
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/documents/buyurtmalar.docx'));
         
@@ -44,15 +53,15 @@ class GenerateOrdersFile extends Action
             $templateProcessor->setValue('name#'. $i, $orders[$i-1]->name);
             $templateProcessor->setValue('address#'. $i, $orders[$i-1]->address);
             $templateProcessor->setValue('total#'. $i, $orders[$i-1]->overal);
-            $templateProcessor->setValue('payment_type#'. $i, $orders[$i-1]->payment_type);
-            $templateProcessor->setValue('payment_status#'. $i, $orders[$i-1]->payment_status);
+            $templateProcessor->setValue('payment_type#'. $i, $payment_types[$orders[$i-1]->payment_type]);
+            $templateProcessor->setValue('payment_status#'. $i, $payment_statuses[$orders[$i-1]->payment_status]);
             $overal += $orders[$i-1]->overal;
         }
         $templateProcessor->setValue('overal', $overal);
 
-        $file = "{$date}-list.docx";
-        $url = "\docs\orders\\". $file;
-        $file_path = "app\public" . $url;
+        $file = "{$date}-orders.docx";
+        $url = "/docs/orders/". $file;
+        $file_path = "app/public" . $url;
         
         $templateProcessor->saveAs(storage_path($file_path));
         return Action::download(url('storage/'.$url), $file);
