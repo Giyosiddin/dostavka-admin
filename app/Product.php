@@ -2,17 +2,26 @@
 
 namespace App;
 
+use App\Events\TelegramSend;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
+use Illuminate\Support\Facades\Log;
+
 class Product extends Model implements HasMedia
 {
 
-    protected $fillable=["title",'cost', 'meta', 'brand_id', 'description', 'vendor_id', 'count', 'order'];
+    protected $fillable=["id", "title",'cost', 'meta', 'brand_id', 'description', 'vendor_id', 'count', 'order'];
     use HasMediaTrait;
 
+    protected $dispatchesEvents = [
+        'updated' => TelegramSend::class,
+        'created' => TelegramSend::class,
+    ];
+
+    
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')

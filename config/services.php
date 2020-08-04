@@ -33,5 +33,10 @@ return [
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
+    
+    'telegram-bot-api' => [
+    'token' => env('TELEGRAM_BOT_TOKEN', '1251885183:AAHCq_olSygRxS1wt-mlxqO4qBm9zJ62npA')
+],
+
 
 ];

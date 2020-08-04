@@ -4,6 +4,8 @@ namespace App\Observers;
 
 use App\Product;
 use App\ProductProperty;
+use App\Listeners\SendTelegramNotification;
+use Illuminate\Support\Facades\Log;
 
 class ProductObserver
 {
@@ -38,6 +40,7 @@ class ProductObserver
             }
             $product->update();
         }
+         event(new SendTelegramNotification($product));
     }
 
     /**
@@ -48,7 +51,8 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        //
+       
+       event(new SendTelegramNotification($product));
     }
 
     /**

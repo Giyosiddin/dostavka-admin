@@ -7,6 +7,11 @@ use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Bakerkretzmar\NovaSettingsTool\SettingsTool;
+use Illuminate\Support\Facades\Event;
+use App\Events\TelegramSend;
+use App\Observers\ProductObserver;
+use App\Product;
+use App\Listeners\SendTelegramNotification;
 
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -19,6 +24,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+         Nova::serving(function () {
+            Product::observe(ProductObserver::class);
+        });
     }
 
     /**

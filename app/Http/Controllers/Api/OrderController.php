@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Order;
 use App\User;
+use App\Notifications\InvoicePaid;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Transformer\OrderTransformer;
 use App\Http\Controllers\Controller;
 use EllipseSynergie\ApiResponse\Laravel\Response;
+use NotificationChannels\Telegram\TelegramChannel;
+use Notification;
 
 class OrderController extends ApiController
 {
@@ -215,17 +218,21 @@ class OrderController extends ApiController
             ]
         ]);
     }
-    public function orderProducts()
+
+
+    public function telegram()
     {
+        Notification::route('telegram', 'TELEGRAM_CHAT_ID')
+            ->notify(new InvoicePaid($invoice));
+    }
 
-        $orders = Order::query();
-        $ids = request()->get('ids');
-        $orders->whereHas('products', function($query) use ($ids){
-                $query->whereIn('orders.id', $ids);
-        });
-
-         dd($orders->get());
-
-
+    /**
+     * Route notifications for the Telegram channel.
+     *
+     * @return int
+     */
+    public function routeNotificationForTelegram()
+    {
+        return $this->telegram_user_id;
     }
 }
