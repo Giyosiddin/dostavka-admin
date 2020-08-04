@@ -58,7 +58,6 @@ class Order extends Resource
             Text::make('Phone')->rules('required', 'numeric'),
             Text::make('Name')->rules('required'),
             Text::make('Address'),
-            Text::make('Sotib olinadigan do\'kon'),
             Select::make('Status')
                 ->options([
                     '0' => 'Yangi',
