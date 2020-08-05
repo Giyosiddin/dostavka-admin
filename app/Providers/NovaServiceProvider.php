@@ -12,6 +12,10 @@ use App\Nova\Metrics\NewOrders;
 use App\Nova\Metrics\NewProducts;
 use App\Nova\Metrics\NewOrdersTotal;
 
+use App\Nova\Metrics\OrdersPerDay; 
+use App\Nova\Metrics\OrdersTotalPerDay;
+use App\Nova\Metrics\ProductsPerDay;
+
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
@@ -64,7 +68,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             // new Help,
             new NewOrders,
             new NewOrdersTotal,
-            new NewProducts
+            new NewProducts,
+            new OrdersPerDay, 
+            new OrdersTotalPerDay,
+            new ProductsPerDay
         ];
     }
 

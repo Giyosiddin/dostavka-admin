@@ -16,7 +16,7 @@ class OrdersTotalPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->countByDays($request, Order::class);
+        return $this->sumByDays($request, Order::class, 'overal');
     }
 
     /**
