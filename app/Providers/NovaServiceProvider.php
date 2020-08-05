@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Bakerkretzmar\NovaSettingsTool\SettingsTool;
 use Illuminate\Support\Facades\Event;
-
+use App\Nova\Metrics\NewOrders;
+use App\Nova\Metrics\NewProducts;
+use App\Nova\Metrics\NewOrdersTotal;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -59,7 +61,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+            // new Help,
+            new NewOrders,
+            new NewOrdersTotal,
+            new NewProducts
         ];
     }
 
