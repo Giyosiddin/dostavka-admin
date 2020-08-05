@@ -80,6 +80,8 @@ class Product extends Resource
                     }),
                     BelongsTo::make('Category'),     
                     Text::make('Vendor market')
+                        ->hideWhenCreating(),     
+                    Text::make('Telegram', 'telegram_notification_id')
                         ->hideWhenCreating(),
                     Text::make('Telegram', 'telegram_notification_id')
                         ->hideWhenCreating(),
