@@ -83,7 +83,7 @@ class ProductCreated extends Notification
         }
         $response = TelegramFile::create()
             // Optional recipient user id.
-            ->to(env('TELEGRAM_CHANNEL_ID')))
+            ->to(env('TELEGRAM_CHANNEL_ID'))
             // Markdown supported.
             ->content($this->product->title."\n\n".$this->product->description."\n\n💰 Narxi: *".$this->product->cost." so'm* \n\nQo'ng'iroq qilib buyurtma bering:\n+998994013937\n\nYetkazib berish bepul\n#" . strtolower($title_tag) . " #". $tag)
             ->file($img_url,'photo') // local photo
