@@ -28,8 +28,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-    //     Nova::serving(function () {
-    //         Product::observe(ProductObserver::class);
-    //     });
     }
 }

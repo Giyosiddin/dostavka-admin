@@ -68,35 +68,31 @@ class ProductCreated extends Notification
 
     public function toTelegram($notifiable)
     {
+        $product_url = url('http://parkent.online/detail/'.$this->product->id);
+        $url = "https://t.me/parkent_online";
         $tovar = Product::find($this->product->id);
-        $url = url('http://parkent.online/');
-        $media = $tovar->getFirstMediaUrl('gallary', 'thumb');
-        $images = $tovar->getMedia();
+        $media = $tovar->getMedia('gallary');
+        $img_url = $media[0]->getPath();
         $tag_str = $this->product->category->slug;
         $tag = str_replace('-', '\_', $tag_str);
+        $title_arr = explode(' ', $this->product->title);
+        // return Log::info($title_arr);
+        if(isset($title_arr[1])){
+            $title_tag = $title_arr[0] ."\_". $title_arr[1];
+        }else{
+            $title_tag = $title_arr[0];
+        }
 
 
-        //  if (count($images) > 0){
-        //     $cover = $images[0];
-        // }
-        // if ($cover){
-
-        // }
-        Log::info('notification');
-        Log::info($this->product);
-        Log::info($tovar);
-        Log::info($images);
-        return;
-        Log::debug($media);
         return TelegramFile::create()
             // Optional recipient user id.
             ->to('-420527890')
             // Markdown supported.
-            ->content($this->product->title."\n\n💰 Narxi: *".$this->product->cost." so'm* \n\nQo'ng'iroq qilib buyurtma bering:\n\n+998994013937\n".$images." \n\nYetkazib berish bepul\n#" . $tag)
-            ->file('http://manage.parkent.online/storage/43/Redmi-Note-9-3.64..jpg', 'photo') // local photo
+            ->content($this->product->title."\n\n".$this->product->description."\n\n💰 Narxi: *".$this->product->cost." so'm* \n\nQo'ng'iroq qilib buyurtma bering:\n+998994013937\n\nYetkazib berish bepul\n#" . strtolower($title_tag) . " #". $tag)
+            ->file($img_url,'photo') // local photo
             // (Optional) Inline Buttons
-            ->button('View Invoice', $url)
-            ->button('Download Invoice', $url);
+            ->button('Online buyurtma', $product_url)
+            ->button("Kanalga a'zo bo'lish", $url);
     }
 
     /**
