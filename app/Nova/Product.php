@@ -14,7 +14,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Eminiarts\Tabs\Tabs;
 use Shaxzodbek\ProductProperty\ProductProperty;
-
+use App\Nova\Actions\NotifyTelegramChanel;
 class Product extends Resource
 {
     /**
@@ -38,6 +38,8 @@ class Product extends Resource
      */
     public static $search = [
         'id',
+        'title',
+        'description'
     ];
 
     /**
@@ -78,7 +80,7 @@ class Product extends Resource
                     }),
                     BelongsTo::make('Category'),     
                     Text::make('Vendor market')
-                        ->hideWhenCreating(),     
+                        ->hideWhenCreating(),
                     BelongsToMany::make('orders')
                         ->fields(new OrderProductFields),
                 ],
@@ -127,6 +129,8 @@ class Product extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new NotifyTelegramChanel
+        ];
     }
 }

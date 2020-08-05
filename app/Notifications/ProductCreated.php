@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Product;
 
-class InvoicePaid extends Notification
+class ProductCreated extends Notification
 {
     use Queueable;
 
@@ -82,9 +82,11 @@ class InvoicePaid extends Notification
         // if ($cover){
 
         // }
+        Log::info('notification');
         Log::info($this->product);
-        Log::info($images);
         Log::info($tovar);
+        Log::info($images);
+        return;
         Log::debug($media);
         return TelegramFile::create()
             // Optional recipient user id.
