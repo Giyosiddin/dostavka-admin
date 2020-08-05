@@ -29,13 +29,11 @@ class NotifyTelegramChanel extends Action
             return;
         }
         foreach ($models as $product){
-            if ($product->telegram_notification_id == ''){
-                Notification::route('telegram', '-420527890')
-                ->notify(new ProductCreated($product));
-                $product->update([
-                    'telegram_notification_id' => '1'
-                ]);
-            }
+            Notification::route('telegram', '-409929671')
+            ->notify(new ProductCreated($product));
+            $product->update([
+                'telegram_notification_id' => '1'
+            ]);
         }
     }
 
