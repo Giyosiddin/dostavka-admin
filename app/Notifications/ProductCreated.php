@@ -76,23 +76,22 @@ class ProductCreated extends Notification
         $tag_str = $this->product->category->slug;
         $tag = str_replace('-', '\_', $tag_str);
         $title_arr = explode(' ', $this->product->title);
-        // return Log::info($title_arr);
         if(isset($title_arr[1])){
             $title_tag = $title_arr[0] ."\_". $title_arr[1];
         }else{
             $title_tag = $title_arr[0];
         }
-
-
-        return TelegramFile::create()
+        $response = TelegramFile::create()
             // Optional recipient user id.
-            ->to('-420527890')
+            ->to(env('TELEGRAM_CHANNEL_ID')))
             // Markdown supported.
             ->content($this->product->title."\n\n".$this->product->description."\n\n💰 Narxi: *".$this->product->cost." so'm* \n\nQo'ng'iroq qilib buyurtma bering:\n+998994013937\n\nYetkazib berish bepul\n#" . strtolower($title_tag) . " #". $tag)
             ->file($img_url,'photo') // local photo
             // (Optional) Inline Buttons
             ->button('Online buyurtma', $product_url)
             ->button("Kanalga a'zo bo'lish", $url);
+        Log::info(['Telegram notification id' => $response]);
+        return $response;
     }
 
     /**
