@@ -54,22 +54,22 @@ class Product extends Resource
             
             new Tabs('Tabs', [
               'Main'    => [
-                  ID::make()->sortable(),
-                  Images::make('Gallary')
+                    ID::make()->sortable(),
+                    Images::make('Gallary')
                       ->conversionOnIndexView('thumb')
                       ->autofill(),
-                  Text::make('Title')
+                    Text::make('Title')
                     ->sortable()
                     ->rules('required', 'max:255')
                     ->autofill(),
-                  Textarea::make('Description'),
-                  Text::make('Cost')
+                    Textarea::make('Description'),
+                    Text::make('Cost')
                     ->rules('required', 'numeric')
                     ->autofill()
                     ->hideFromIndex(function (ResourceIndexRequest $request) {
                         return $request->viaRelationship();
                     }),
-                  Text::make('Count')
+                    Text::make('Count')
                     ->rules('required', 'numeric')
                     ->autofill(),
                     Text::make('Order')
@@ -81,6 +81,8 @@ class Product extends Resource
                     BelongsTo::make('Category'),     
                     Text::make('Vendor market')
                         ->hideWhenCreating(),     
+                    Text::make('Telegram', 'telegram_notification_id')
+                        ->hideWhenCreating(),
                     Text::make('Telegram', 'telegram_notification_id')
                         ->hideWhenCreating(),
                     BelongsToMany::make('orders')

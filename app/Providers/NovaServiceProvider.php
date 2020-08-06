@@ -8,8 +8,16 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Bakerkretzmar\NovaSettingsTool\SettingsTool;
 use Illuminate\Support\Facades\Event;
+
 use App\Order;
 use \App\Observers\OrderObserver;
+use App\Nova\Metrics\NewOrders;
+use App\Nova\Metrics\NewProducts;
+use App\Nova\Metrics\NewOrdersTotal;
+
+use App\Nova\Metrics\OrdersPerDay; 
+use App\Nova\Metrics\OrdersTotalPerDay;
+use App\Nova\Metrics\ProductsPerDay;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -62,7 +70,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+            // new Help,
+            new NewOrders,
+            new NewOrdersTotal,
+            new NewProducts,
+            new OrdersPerDay, 
+            new OrdersTotalPerDay,
+            new ProductsPerDay
         ];
     }
 
