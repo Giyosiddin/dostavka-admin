@@ -15,6 +15,9 @@ use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Eminiarts\Tabs\Tabs;
 use Shaxzodbek\ProductProperty\ProductProperty;
 use App\Nova\Actions\NotifyTelegramChanel;
+use App\Nova\Filters\CategoryType;
+
+
 class Product extends Resource
 {
     /**
@@ -23,13 +26,17 @@ class Product extends Resource
      * @var string
      */
     public static $model = 'App\Product';
-
     /**
-     * The single value that should be used to represent the resource when being displayed.
+     * Get the value that should be displayed to represent the resource.
      *
-     * @var string
+     * @return string
      */
-    public static $title = 'title';
+    public function title()
+    {
+        return $this->name;
+    }
+
+    // public static $subtitle = 'cost';
 
     /**
      * The columns that should be searched.
@@ -39,7 +46,8 @@ class Product extends Resource
     public static $search = [
         'id',
         'title',
-        'description'
+        'description',
+        'cost'
     ];
 
     /**
@@ -83,8 +91,6 @@ class Product extends Resource
                         ->hideWhenCreating(),     
                     Text::make('Telegram', 'telegram_notification_id')
                         ->hideWhenCreating(),
-                    Text::make('Telegram', 'telegram_notification_id')
-                        ->hideWhenCreating(),
                     BelongsToMany::make('orders')
                         ->fields(new OrderProductFields),
                 ],
@@ -111,7 +117,9 @@ class Product extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+           new CategoryType
+        ];
     }
 
     /**

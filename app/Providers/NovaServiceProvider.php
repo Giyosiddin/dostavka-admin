@@ -10,7 +10,7 @@ use Bakerkretzmar\NovaSettingsTool\SettingsTool;
 use Illuminate\Support\Facades\Event;
 
 use App\Order;
-use \App\Observers\OrderObserver;
+use App\Observers\OrderObserver;
 use App\Nova\Metrics\NewOrders;
 use App\Nova\Metrics\NewProducts;
 use App\Nova\Metrics\NewOrdersTotal;

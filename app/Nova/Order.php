@@ -19,6 +19,7 @@ use App\Nova\Actions\GenerateOrdersFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Shaxzodbek\ProductProperty\ProductProperty;
+use Sloveniangooner\SearchableSelect\SearchableSelect;
 
 class Order extends Resource
 {
@@ -81,8 +82,10 @@ class Order extends Resource
                 ])
                 ->displayUsingLabels(),   
             Text::make('overal'),
-            BelongsToMany::make('Products')
-                ->fields(new OrderProductFields),
+            BelongsToMany::make('Products')->searchable()
+                ->fields(new OrderProductFields)->display(function($product){ 
+                         return $product->title.' - ' . $product->cost; 
+                     }),
 
 
         ];

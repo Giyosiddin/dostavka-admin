@@ -5,7 +5,9 @@ namespace App\Nova;
 use Laravel\Nova\Fields\Text;
 
 class OrderProductFields
-{
+{   
+
+
     /**
      * Get the pivot fields for the relationship.
      *
@@ -19,4 +21,5 @@ class OrderProductFields
             Text::make('Total'),
         ];
     }
+
 }
