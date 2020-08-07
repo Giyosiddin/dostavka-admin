@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Bakerkretzmar\NovaSettingsTool\SettingsTool;
 use Illuminate\Support\Facades\Event;
+
+use App\Order;
+use App\Observers\OrderObserver;
 use App\Nova\Metrics\NewOrders;
 use App\Nova\Metrics\NewProducts;
 use App\Nova\Metrics\NewOrdersTotal;
@@ -26,6 +29,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        Order::observe(OrderObserver::class);
+ 
     }
 
     /**

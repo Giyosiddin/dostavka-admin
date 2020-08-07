@@ -68,7 +68,6 @@ class ProductCreated extends Notification
 
     public function toTelegram($notifiable)
     {
-        Log::info('ok');
         $product_url = url('http://parkent.online/detail/'.$this->product->id);
         $url = "https://t.me/parkent_online";
         $tovar = Product::find($this->product->id);
@@ -77,22 +76,23 @@ class ProductCreated extends Notification
         $tag_str = $this->product->category->slug;
         $tag = str_replace('-', '\_', $tag_str);
         $title_arr = explode(' ', $this->product->title);
+        // return Log::info($title_arr);
         if(isset($title_arr[1])){
             $title_tag = $title_arr[0] ."\_". $title_arr[1];
         }else{
             $title_tag = $title_arr[0];
         }
-        // $response = ;
-        // Log::info(['Telegram notification id' => $response]);
+
+
         return TelegramFile::create()
-        // Optional recipient user id.
-        ->to('-409929671')
-        // Markdown supported.
-        ->content($this->product->title."\n\n".$this->product->description."\n\n💰 Narxi: *".$this->product->cost." so'm* \n\nQo'ng'iroq qilib buyurtma bering:\n+998994013937\n\nYetkazib berish bepul\n#" . strtolower($title_tag) . " #". $tag)
-        ->file($img_url,'photo') // local photo
-        // (Optional) Inline Buttons
-        ->button('Online buyurtma', $product_url)
-        ->button("Kanalga a'zo bo'lish", $url);
+            // Optional recipient user id.
+            ->to('-300626626')
+            // Markdown supported.
+            ->content($this->product->title."\n\n".$this->product->description."\n\n💰 Narxi: *".$this->product->cost." so'm* \n\nQo'ng'iroq qilib buyurtma bering:\n+998994013937\n\nYetkazib berish bepul\n#" . strtolower($title_tag) . " #". $tag)
+            ->file($img_url,'photo') // local photo
+            // (Optional) Inline Buttons
+            ->button('Online buyurtma', $product_url)
+            ->button("Kanalga a'zo bo'lish", $url);
     }
 
     /**

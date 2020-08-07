@@ -19,16 +19,16 @@ use App\Nova\Actions\GenerateOrdersFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Shaxzodbek\ProductProperty\ProductProperty;
-use Sloveniangooner\SearchableSelect\SearchableSelect;
+use Laravel\Nova\Fields\DateTime;
 
-class Order extends Resource
+class Money extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Order';
+    public static $model = 'App\Money';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -44,6 +44,8 @@ class Order extends Resource
      */
     public static $search = [
         'id',
+        'type',
+        'amout'
     ];
 
     /**
@@ -56,38 +58,15 @@ class Order extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Phone')->rules('required', 'numeric'),
-            Text::make('Name')->rules('required'),
-            Text::make('Address'),
-            Select::make('Status')
+            Text::make('Amout')->rules('required', 'numeric'),
+            Textarea::make('Description'),
+            Select::make('Type')
                 ->options([
-                    '0' => 'Yangi',
-                    '1' => 'Amalga oshirilmoqda',
-                    '2' => 'Yakunladi',
-                    '3' => 'Bekor qilindi',
-                ])
-                ->displayUsingLabels(),   
-            Select::make('Payment type')
-                ->options([
-                    'cash' => 'Naqt pul',
-                    'click' => 'Click',
-                    'payme' => 'Payme'
-                ])
-                ->displayUsingLabels(),   
-            Select::make('Payment status')
-                ->options([
-                    'waiting' => 'Kutilmoqda',
-                    'processing' => 'Amalga oshirilmoqda',
-                    'completed' => 'Yakunlandi'
-                ])
-                ->displayUsingLabels(),   
-            Text::make('overal'),
-            BelongsToMany::make('Products')->searchable()
-                ->fields(new OrderProductFields)->display(function($product){ 
-                         return $product->title.' - ' . $product->cost; 
-                     }),
-
-
+                    'income' => 'Income',
+                    'debit' => 'Debit',
+                    'outcome' => 'Outcome'
+                ]),   
+            DateTime::make('Created', 'created_at')->format('DD MMM YYYY'),
         ];
     }
 
@@ -133,9 +112,7 @@ class Order extends Resource
     public function actions(Request $request)
     {
         return [
-            new GenerateListFile,
-            new GenerateOrdersFile,
-            new GenerateOrderFile
+
         ];
     }
 }
