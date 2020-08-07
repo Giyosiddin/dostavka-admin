@@ -44,7 +44,7 @@ class ProductController extends ApiController
      */
     public function index()
     {
-        $products = Product::query()->limit(request()->get('limit', 10));
+        $products = Product::query();
         if (is_array(request()->get('categories'))){
             $categories = request()->get('categories');
             // $products->whereHas('categories', function($query) use ($categories){
@@ -59,7 +59,7 @@ class ProductController extends ApiController
 
 
 
-        $products = $products->get();
+        $products = $products->paginate(request()->get('limit', 10));
         return $this->response->get(['products' => [$products, new ProductTransformer]]);
     }
 
