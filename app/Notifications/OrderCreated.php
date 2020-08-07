@@ -65,7 +65,7 @@ class OrderCreated extends Notification
         Log::Info($order_products); 
         return TelegramMessage::create()
             // Optional recipient user id.
-            ->to('-431597365')
+            ->to('-409929671')
             // Markdown supported.
             ->content("*Buyurtma:* ".$order->id."\n*Mijoz:* ".$order->name."\n*Telefon raqami:* ".$order->phone."\n*To'lov turi:* ".$order->payment_type."\n*Buyurtma summasi:*".$order->overal." \n*Maxsulotlar:* ".$order_products);
     }
