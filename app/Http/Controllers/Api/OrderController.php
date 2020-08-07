@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Order;
 use App\User;
-use App\Notifications\InvoicePaid;
 use App\Product;
+use Notification;
 use Illuminate\Http\Request;
-use App\Transformer\OrderTransformer;
+use App\Notifications\InvoicePaid;
+use App\Notifications\OrderCreated;
 use App\Http\Controllers\Controller;
+use App\Transformer\OrderTransformer;
 use EllipseSynergie\ApiResponse\Laravel\Response;
 use NotificationChannels\Telegram\TelegramChannel;
-use Notification;
 
 class OrderController extends ApiController
 {
@@ -104,7 +105,8 @@ class OrderController extends ApiController
         $order->update([
             'overal' => $overal
         ]);
-
+        Notification::route('telegram', '-431597365')
+            ->notify(new OrderCreated($order));
         return $this->response->get(['order' => [$order, new OrderTransformer]]);
     }
 

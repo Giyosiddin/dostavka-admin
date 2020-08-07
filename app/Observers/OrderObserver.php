@@ -3,9 +3,6 @@
 namespace App\Observers;
 
 use App\Order;
-use NotificationChannels\Telegram\TelegramChannel;
-use Notification;
-use App\Notifications\OrderCreated;
 
 class OrderObserver
 {
@@ -18,8 +15,8 @@ class OrderObserver
     public function created(Order $order)
     {
 
-        Notification::route('telegram', '-431597365')
-            ->notify(new OrderCreated($order));
+        // Notification::route('telegram', '-431597365')
+        //     ->notify(new OrderCreated($order));
     }
 
     /**
