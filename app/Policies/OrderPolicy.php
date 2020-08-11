@@ -65,7 +65,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        // return false;
+        return false;
     }
 
     /**

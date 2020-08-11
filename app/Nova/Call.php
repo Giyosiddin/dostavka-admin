@@ -3,22 +3,18 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Avatar;
-use Benjaminhirsch\NovaSlugField\Slug;
-use Benjaminhirsch\NovaSlugField\TextWithSlug;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
+use Laravel\Nova\Fields\Text;
 
-class Media extends Resource
+class Call extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Media';
+    public static $model = 'App\Call';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -46,11 +42,10 @@ class Media extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name'),
-            Text::make('Model_type'),
-            Text::make('Collection_name'),
-            // Images::make('file_name'),
-            Avatar::make('file_name')->disk('public'), 
+            Text::make('Phone'),
+            Text::make('Status'),
+            Text::make('Duration'),
+            Text::make('Description'),
         ];
     }
 
