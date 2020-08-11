@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 
 class Call extends Resource
 {
@@ -46,6 +47,12 @@ class Call extends Resource
             Text::make('Status'),
             Text::make('Duration'),
             Text::make('Description'),
+            Select::make('Result')
+                ->options([
+                    '1' => 'Buyurtma berdi',
+                    '2' => 'Buyurtma bermadi',
+                    '3' => 'O`ylab ko`ryapti'
+                ]),
         ];
     }
 

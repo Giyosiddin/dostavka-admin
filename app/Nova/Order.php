@@ -15,6 +15,8 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Actions\GenerateListFile;
 use App\Nova\Actions\DeleteOrderData;
+use App\Nova\Actions\ProcessingStatusOrder;
+use App\Nova\Actions\CompletedStatusOrder;
 use App\Nova\Actions\GenerateOrderFile;
 use App\Nova\Actions\GenerateOrdersFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -140,7 +142,9 @@ class Order extends Resource
             new GenerateListFile,
             new GenerateOrdersFile,
             new GenerateOrderFile,
-            new DeleteOrderData
+            new DeleteOrderData,
+            new ProcessingStatusOrder,
+            new CompletedStatusOrder,
         ];
     }
 }

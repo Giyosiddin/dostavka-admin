@@ -52,4 +52,13 @@ class OrderStatusType extends Filter
 
         ];
     }
+    /**
+     * The default value of the filter.
+     *
+     * @var string
+     */
+    public function default()
+    {
+        return '0';
+    }
 }
