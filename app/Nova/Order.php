@@ -14,12 +14,14 @@ use Hnassr\NovaKeyValue\KeyValue;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Actions\GenerateListFile;
+use App\Nova\Actions\DeleteOrderData;
 use App\Nova\Actions\GenerateOrderFile;
 use App\Nova\Actions\GenerateOrdersFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Shaxzodbek\ProductProperty\ProductProperty;
 use Sloveniangooner\SearchableSelect\SearchableSelect;
+use App\Nova\Filters\OrderStatusType;
 
 class Order extends Resource
 {
@@ -63,7 +65,7 @@ class Order extends Resource
                 ->options([
                     '0' => 'Yangi',
                     '1' => 'Amalga oshirilmoqda',
-                    '2' => 'Yakunladi',
+                    '2' => 'Yakunlandi',
                     '3' => 'Bekor qilindi',
                 ])
                 ->displayUsingLabels(),   
@@ -110,7 +112,9 @@ class Order extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new OrderStatusType,
+        ];
     }
 
     /**
@@ -135,7 +139,8 @@ class Order extends Resource
         return [
             new GenerateListFile,
             new GenerateOrdersFile,
-            new GenerateOrderFile
+            new GenerateOrderFile,
+            new DeleteOrderData
         ];
     }
 }
