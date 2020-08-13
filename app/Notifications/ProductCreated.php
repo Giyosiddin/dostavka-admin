@@ -93,6 +93,7 @@ class ProductCreated extends Notification
             // (Optional) Inline Buttons
             ->button('Online buyurtma', $product_url)
             ->button("Kanalga a'zo bo'lish", $url);
+            ->button("Web saytimiz", 'http://parkent.online');
     }
 
     /**

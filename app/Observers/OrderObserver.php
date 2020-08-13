@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Order;
+use App\Clients;
+use Illuminate\Support\Facades\Log;
 
 class OrderObserver
 {
@@ -14,9 +16,15 @@ class OrderObserver
      */
     public function created(Order $order)
     {
-
-        // Notification::route('telegram', '-431597365')
-        //     ->notify(new OrderCreated($order));
+        $clients = Clients::all()->pluck('phone')->toArray();
+        if (in_array($order->phone, $clients)) {
+            Log::Info('exists phone');
+        }else{
+                Clients::create([
+                'phone' => $order->phone,
+                'name' => $order->name
+            ]);
+        }
     }
 
     /**
