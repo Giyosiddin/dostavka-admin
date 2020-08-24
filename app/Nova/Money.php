@@ -19,6 +19,9 @@ use App\Nova\Actions\GenerateOrdersFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Shaxzodbek\ProductProperty\ProductProperty;
+use App\Nova\Metrics\IncomeMoney;
+use App\Nova\Metrics\OutcomeMoney;
+use App\Nova\Metrics\ProfitMoney;
 use Laravel\Nova\Fields\DateTime;
 
 class Money extends Resource
@@ -36,6 +39,7 @@ class Money extends Resource
      * @var string
      */
     public static $title = 'id';
+    public static $description = 'description';
 
     /**
      * The columns that should be searched.
@@ -45,7 +49,8 @@ class Money extends Resource
     public static $search = [
         'id',
         'type',
-        'amout'
+        'amout',
+        'description'
     ];
 
     /**
@@ -59,7 +64,7 @@ class Money extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Amout')->rules('required', 'numeric'),
-            Textarea::make('Description'),
+            Textarea::make('Description','description'),
             Select::make('Type')
                 ->options([
                     'income' => 'Income',
@@ -78,7 +83,13 @@ class Money extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new IncomeMoney,
+            new OutcomeMoney,
+            new ProfitMoney
+
+
+        ];
     }
 
     /**
@@ -89,7 +100,8 @@ class Money extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+        ];
     }
 
     /**
